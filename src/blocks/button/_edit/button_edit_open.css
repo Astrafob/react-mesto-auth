@@ -1,0 +1,21 @@
+.button_edit_open {
+  background-image: url(../../../image/pen-edit.svg);
+  background-repeat: no-repeat;
+  background-size: 45%;
+  background-position: center;
+  min-width: 24px;
+  height: 24px;
+  margin-left: 18px;
+  margin-top: 16px;
+  padding: 0;
+  outline: none;
+}
+
+@media screen and (max-width: 700px) {
+  .button_edit_open {
+    min-width: 18px;
+    height: 18px;
+    margin-left: 10px;
+    margin-top: 8px;
+  }
+}

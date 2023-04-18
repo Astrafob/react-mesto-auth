@@ -1,0 +1,11 @@
+.popup__edit-form {
+  display: flex;
+  flex-direction: column;
+  padding: 34px 36px 37px;
+}
+
+@media screen and (max-width: 555px) {
+  .popup__edit-form {
+    padding: 25px 22px;
+  }
+}

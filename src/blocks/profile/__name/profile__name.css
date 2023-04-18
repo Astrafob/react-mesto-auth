@@ -1,0 +1,10 @@
+.profile__name {
+  display: flex;
+}
+
+@media screen and (max-width: 700px) {
+  .profile__name {
+    padding-left: 27px;
+    justify-content: center;
+  }
+}
