@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
@@ -9,6 +10,10 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
+import Login from './Login.js';
+import Register from './Register.js';
+import ProtectedRoute from './ProtectedRoute.js';
+import InfoTooltip from './InfoTooltip.js';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -17,6 +22,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     Promise.all([api.getPersonInfo(), api.getCards()])
@@ -99,16 +105,28 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page__container">
         <Header />
-        <Main
-          onEditProfile={setIsEditProfilePopupOpen}
-          onAddPlace={setIsAddPlacePopupOpen}
-          onEditAvatar={setIsEditAvatarPopupOpen}
-          onCardClick={setSelectedCard}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          cards={cards}
-        />
-        <Footer />
+        <Routes>
+          <Route path="/" element={
+            <ProtectedRoute
+              element={Main}
+              onEditProfile={setIsEditProfilePopupOpen}
+              onAddPlace={setIsAddPlacePopupOpen}
+              onEditAvatar={setIsEditAvatarPopupOpen}
+              onCardClick={setSelectedCard}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              cards={cards}
+              loggedIn={loggedIn}
+            />
+          } />
+          <Route path="/sign-up" element={
+            <Register />
+          } />
+          <Route path="/sign-in" element={
+            <Login />
+          } />
+        </Routes>
+        {loggedIn && <Footer />}
 
         <ImagePopup
           card={selectedCard}

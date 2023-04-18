@@ -1,0 +1,18 @@
+.login-form__title {
+  margin: 0 0 50px 0;
+  padding: 0;
+  text-align: center;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+@media screen and (max-width: 418px) {
+  .login-form__title {
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 40px;
+  }
+}

@@ -1,0 +1,16 @@
+.login-form__button {
+  background-color: white;
+  margin-top: 186px;
+  min-height: 50px;
+  text-align: center;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.login-form__button:hover {
+  opacity: .8;
+  cursor: pointer;
+}
