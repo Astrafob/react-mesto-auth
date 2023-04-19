@@ -14,3 +14,10 @@
   opacity: .8;
   cursor: pointer;
 }
+
+@media screen and (max-width: 418px) {
+  .login-form__button {
+    font-size: 16px;
+    line-height: 19px;
+  }
+}

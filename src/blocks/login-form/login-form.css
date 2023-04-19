@@ -1,9 +1,8 @@
 .login-form {
-  margin: 60px auto;
+  margin: 60px auto 15px auto;
   max-width: 358px;
   display: flex;
   flex-direction: column;
-  outline: 1px red solid;
 }
 
 @media screen and (max-width: 418px) {

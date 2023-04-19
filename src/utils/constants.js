@@ -5,3 +5,10 @@ export const apiConfig = {
     'Content-Type': 'application/json'
   }
 };
+
+export const authApiConfig = {
+  url: 'https://auth.nomoreparties.co',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+}

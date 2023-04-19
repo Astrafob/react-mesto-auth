@@ -10,7 +10,7 @@ function Login() {
         <h2 className="login-form__title">Вход</h2>
         <input className="login-form__input" name="userEmail" type="email" placeholder="Email" required />
         <span className="login-form__input-error" />
-        <input className="login-form__input" name="userPassword" type="text" placeholder="Пароль" maxLength="40" minLength="2" required />
+        <input className="login-form__input" name="userPassword" type="text" placeholder="Пароль" maxLength="40" minLength="6" required />
         <span className="login-form__input-error" />
         <button className="login-form__button" type="submit">Войти</button>
       </form>

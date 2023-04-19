@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
@@ -104,26 +104,46 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page__container">
-        <Header />
         <Routes>
           <Route path="/" element={
-            <ProtectedRoute
-              element={Main}
-              onEditProfile={setIsEditProfilePopupOpen}
-              onAddPlace={setIsAddPlacePopupOpen}
-              onEditAvatar={setIsEditAvatarPopupOpen}
-              onCardClick={setSelectedCard}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
-              cards={cards}
-              loggedIn={loggedIn}
-            />
+            <>
+              <Header
+                title
+                path="/sign-in"
+              />
+              <ProtectedRoute
+                element={Main}
+                onEditProfile={setIsEditProfilePopupOpen}
+                onAddPlace={setIsAddPlacePopupOpen}
+                onEditAvatar={setIsEditAvatarPopupOpen}
+                onCardClick={setSelectedCard}
+                onCardLike={handleCardLike}
+                onCardDelete={handleCardDelete}
+                cards={cards}
+                loggedIn={loggedIn}
+              />
+            </>
           } />
           <Route path="/sign-up" element={
-            <Register />
+            <>
+              <Header
+                title="Войти"
+                path="/sign-in"
+              />
+              <Register />
+            </>
           } />
           <Route path="/sign-in" element={
-            <Login />
+            <>
+              <Header
+                title="Регистрация"
+                path="/sign-up"
+              />
+              <Login />
+            </>
+          } />
+          <Route path='*' element={
+            <Navigate to='/' />
           } />
         </Routes>
         {loggedIn && <Footer />}

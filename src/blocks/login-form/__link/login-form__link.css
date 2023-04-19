@@ -1,0 +1,14 @@
+.login-form__link {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration: none;
+  color: white;
+}
+
+.login-form__link:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
