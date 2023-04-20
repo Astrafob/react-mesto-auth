@@ -89,8 +89,11 @@ function App() {
         .then(({ data }) => {
           setLoggedIn(true);
           setEmailUser(data.email);
+          navigate('/', { replace: true });
         })
-        .then(() => navigate('/', { replace: true }))
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }, [])
 

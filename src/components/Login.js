@@ -27,7 +27,7 @@ function Login({ onAuthorize }) {
         <h2 className="login-form__title">Вход</h2>
         <input className="login-form__input" name="email" type="email" placeholder="Email" onChange={handleChangeEmail} autoComplete="email" value={email} required />
         <span className="login-form__input-error" />
-        <input className="login-form__input" name="password" type="text" placeholder="Пароль" maxLength="40" minLength="6" onChange={handleChangePassword} autoComplete="password" value={password} required />
+        <input className="login-form__input" name="password" type="password" placeholder="Пароль" maxLength="40" minLength="6" onChange={handleChangePassword} autoComplete="password" value={password} required />
         <span className="login-form__input-error" />
         <button className="login-form__button" type="submit">Войти</button>
       </form>
