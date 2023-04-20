@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
@@ -14,6 +14,7 @@ import Login from './Login.js';
 import Register from './Register.js';
 import ProtectedRoute from './ProtectedRoute.js';
 import InfoTooltip from './InfoTooltip.js';
+import auth from '../utils/authApi.js';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -21,24 +22,83 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
+  const [emailUser, setEmailUser] = useState('');
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false)
+  const navigate = useNavigate();
 
   useEffect(() => {
-    Promise.all([api.getPersonInfo(), api.getCards()])
-      .then(([dataUser, card]) => {
-        setCurrentUser(dataUser);
-        setCards(card);
+    if (loggedIn) {
+      Promise.all([api.getPersonInfo(), api.getCards()])
+        .then(([dataUser, card]) => {
+          setCurrentUser(dataUser);
+          setCards(card);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+  }, [loggedIn]);
+
+  function handleRegister(userInfo) {
+    auth.register(userInfo)
+      .then(data => {
+        setIsSuccess(true);
+        navigate("/sing-in");
       })
       .catch((error) => {
+        setIsSuccess(false);
         console.log(error);
       })
-  }, []);
+      .finally(() => {
+        setIsInfoTooltipPopupOpen(true);
+      })
+  }
+
+  function handleAuthorize(userInfo) {
+    auth.authorize(userInfo)
+      .then(data => {
+        if (data.token) {
+          console.log(data);
+          localStorage.setItem('jwt', data.token);
+          setLoggedIn(true);
+          setEmailUser(userInfo.email);
+          navigate('/');
+        }
+      })
+      .catch((error) => {
+        setIsSuccess(false);
+        setIsInfoTooltipPopupOpen(true);
+        console.log(error)
+      })
+  }
+
+  function handleSignOut() {
+    localStorage.removeItem('jwt');
+    setEmailUser('');
+    setLoggedIn(false);
+    navigate('/sign-in');
+  }
+
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth.getContent(localStorage.getItem('jwt'))
+        .then(({ data }) => {
+          setLoggedIn(true);
+          setEmailUser(data.email);
+        })
+        .then(() => navigate('/', { replace: true }))
+    }
+  }, [])
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsInfoTooltipPopupOpen(false);
     setSelectedCard({});
   }
 
@@ -108,8 +168,10 @@ function App() {
           <Route path="/" element={
             <>
               <Header
-                title
+                title="Выйти"
+                email={emailUser}
                 path="/sign-in"
+                onSignOut={handleSignOut}
               />
               <ProtectedRoute
                 element={Main}
@@ -130,7 +192,9 @@ function App() {
                 title="Войти"
                 path="/sign-in"
               />
-              <Register />
+              <Register
+                onRegister={handleRegister}
+              />
             </>
           } />
           <Route path="/sign-in" element={
@@ -139,7 +203,9 @@ function App() {
                 title="Регистрация"
                 path="/sign-up"
               />
-              <Login />
+              <Login
+                onAuthorize={handleAuthorize}
+              />
             </>
           } />
           <Route path='*' element={
@@ -175,6 +241,13 @@ function App() {
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+        />
+
+        <InfoTooltip
+          name={"success"}
+          isOpen={isInfoTooltipPopupOpen}
+          onClose={closeAllPopups}
+          isSuccess={isSuccess}
         />
 
       </div>
