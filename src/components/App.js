@@ -27,6 +27,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false)
+  const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -102,6 +103,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsInfoTooltipPopupOpen(false);
+    setIsBurgerOpen(false);
     setSelectedCard({});
   }
 
@@ -175,6 +177,9 @@ function App() {
                 email={emailUser}
                 path="/sign-in"
                 onSignOut={handleSignOut}
+                isOpen={isBurgerOpen}
+                setIsBurgerOpen={setIsBurgerOpen}
+                onClose={closeAllPopups}
               />
               <ProtectedRoute
                 element={Main}

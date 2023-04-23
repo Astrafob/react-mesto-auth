@@ -1,0 +1,24 @@
+.header__burger {
+  visibility: hidden;
+  position: absolute;
+  margin-right: 30px;
+  background-image: url(../../../image/burger_btn.svg);
+  background-color: transparent;
+  background-position: center;
+  background-size: cover;
+  min-width: 24px;
+  min-height: 24px;
+  border: none;
+}
+
+.header__burger:hover {
+  cursor: pointer;
+  opacity: .8;
+}
+
+@media screen and (max-width: 450px) {
+  .header__burger {
+    visibility: visible;
+    position: relative;
+  }
+}

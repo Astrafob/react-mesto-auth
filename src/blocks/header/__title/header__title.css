@@ -3,3 +3,15 @@
   align-items: end;
   margin: 0;
 }
+
+@media screen and (max-width: 960px) {
+  .header__title {
+    padding-right: 30px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .header__title {
+    visibility: hidden;
+  }
+}
